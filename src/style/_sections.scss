@@ -1359,6 +1359,65 @@
         }
     }
 
+    // Sección Inferior (Copyright & Atribución)
+    &__bottom {
+        width: 100%;
+        background-color: darken($color-pure-dark, 3%);
+        border-top: 1px solid rgba($color-steel-gray, 0.1);
+        padding: 24px 0;
+        display: flex;
+        justify-content: center;
+
+        &-container {
+            max-width: 1280px;
+            width: 100%;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between; // Alineación perfecta de los 3 bloques
+            align-items: center;
+            box-sizing: border-box;
+        }
+    }
+
+    &__copy {
+        font-size: 13.5px;
+        color: $color-steel-gray;
+        margin: 0;
+    }
+
+    // Estilos dedicados para la firma técnica
+    &__powered {
+        font-size: 13.5px;
+        color: lighten($color-steel-gray, 10%);
+        margin: 0;
+
+        &-link {
+            color: $color-construction-orange;
+            text-decoration: none;
+            font-weight: 700;
+            transition: $transition-structural;
+
+            &:hover {
+                color: $color-white;
+                text-shadow: 0 0 8px rgba($color-construction-orange, 0.6);
+            }
+        }
+    }
+
+    &__legal {
+        display: flex;
+        gap: 24px;
+    }
+
+    // Ajuste responsivo para móviles (apilar verticalmente)
+    @media (max-width: 840px) {
+        &__bottom-container {
+            flex-direction: column;
+            gap: 14px;
+            text-align: center;
+        }
+    }
+
     &__copy {
         font-size: 13.5px;
         color: $color-steel-gray;

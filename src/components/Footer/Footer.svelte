@@ -85,6 +85,16 @@
                 &copy; {currentYear}
                 {companyName}. Todos los derechos reservados.
             </p>
+
+            <p class="footer__powered">
+                Powered by <a
+                    href="https://dlunire.dev"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="footer__powered-link">DLUnire</a
+                >
+            </p>
+
             <div class="footer__legal">
                 {#each legalLinks as legal}
                     <a href={legal.href} class="footer__legal-link"
