@@ -1181,7 +1181,7 @@
         grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
         box-sizing: border-box;
         padding-bottom: 60px;
-        gap: 5px;
+        gap: 10px;
 
         @media screen and (max-width: 600px) {
             grid-template-columns: 1fr;
@@ -1312,8 +1312,8 @@
         padding: 0;
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        padding-left: 10px;
+        // gap: 12px;
+        width: 100%;
 
         &--static {
             gap: 16px;
@@ -1321,7 +1321,9 @@
     }
 
     &__item {
-        font-size: 14.5px;
+        font: {
+            size: 14.5px;
+        }
 
         &--text {
             color: color.adjust($color: $color-steel-gray, $lightness: 15%);
@@ -1331,16 +1333,28 @@
                 color: $color-white;
             }
         }
+
+        &--list {
+            margin: 0;
+            margin: 0;
+        }
     }
 
     &__link {
         color: color.adjust($color: $color-steel-gray, $lightness: 15%);
         text-decoration: none;
         transition: $transition-structural;
+        display: flex;
+        align-items: center;
 
         &:hover {
             color: $color-construction-orange;
             padding-left: 4px;
+        }
+
+        & {
+            padding-top: 5px;
+            padding-bottom: 5px;
         }
     }
 

@@ -14,9 +14,9 @@
     ];
 
     export let legalLinks: IFooterLink[] = [
-        { label: "Políticas de Privacidad", href: "#/privacidad" },
-        { label: "Términos de Servicio", href: "#/terminos" },
-        { label: "Tratamiento de Datos", href: "#/datos" },
+        { label: "Políticas de Privacidad", href: "#/privacy" },
+        { label: "Términos de Servicio", href: "#/terms" },
+        { label: "Tratamiento de Datos", href: "#/data" },
     ];
 
     export let id: string = "footer";
@@ -66,7 +66,7 @@
             <h3 class="footer__title">Navegación</h3>
             <ul class="footer__list">
                 {#each navigationLinks as link}
-                    <li class="footer__item">
+                    <li class="footer__item footer__item--list">
                         <a href={link.href} class="footer__link">{link.label}</a
                         >
                     </li>
