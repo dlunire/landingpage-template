@@ -1,0 +1,21 @@
+// ==========================================================================
+// TOKENS GLOBALES - SARA CONSTRUCCIONES
+// ==========================================================================
+
+// Paleta de Colores
+$color-pure-dark: #0f172a; // Gris profundo estructural (Slate 900)
+$color-concrete-dark: #1e293b; // Gris concreto base (Slate 800)
+$color-steel-gray: #64748b; // Gris acero secundario (Slate 500)
+$color-light-gray: #f8fafc; // Fondo claro / concreto limpio (Slate 50)
+$color-white: #ffffff;
+$color-construction-orange: #d97706; // Naranja / Ámbar de obra activa (Amber 600)
+
+// Tipografía
+$font-header: 'Montserrat', Arial, sans-serif;
+
+// Breakpoints (Diseño Responsivo)
+$breakpoint-tablet: 768px;
+
+// Transiciones y Comportamiento Dinámico
+$transition-structural: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+$transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);

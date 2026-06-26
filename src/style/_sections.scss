@@ -1,0 +1,1410 @@
+@use "sass:color";
+@use "./vars" as *;
+
+.hero {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-color: $color-concrete-dark;
+
+    &__slide {
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+    }
+
+    &__container {
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
+        box-sizing: border-box;
+    }
+
+    &__content {
+        max-width: 720px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        // Animación fluida nativa para los elementos cuando la lámina cambia
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+    }
+
+    &__badge {
+        background-color: rgba($color-construction-orange, 0.15);
+        color: #fbbf24;
+        border: 1px solid rgba(#fbbf24, 0.3);
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-radius: 3px;
+        margin-bottom: 24px;
+        font-family: $font-header;
+    }
+
+    &__title {
+        font-family: $font-header;
+        color: $color-white;
+        font-size: 52px;
+        font-weight: 800;
+        line-height: 1.15;
+        margin: 0 0 20px 0;
+        letter-spacing: -1px;
+    }
+
+    &__subtitle {
+        color: rgba($color-white, 0.85);
+        font-size: 18px;
+        line-height: 1.6;
+        margin: 0 0 40px 0;
+        font-weight: 400;
+    }
+
+    &__actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    &__btn {
+        padding: 16px 32px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        transition: $transition-smooth;
+        font-family: $font-header;
+        text-align: center;
+
+        &--primary {
+            background-color: $color-construction-orange;
+            color: $color-white;
+            box-shadow: 0 4px 14px rgba($color-construction-orange, 0.3);
+
+            &:hover {
+                background-color: color.adjust($color: $color-construction-orange, $lightness: -6%);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba($color-construction-orange, 0.4);
+            }
+        }
+
+        &--secondary {
+            background-color: transparent;
+            color: $color-white;
+            border: 2px solid rgba($color-white, 0.4);
+
+            &:hover {
+                background-color: $color-white;
+                color: $color-concrete-dark;
+                border-color: $color-white;
+                transform: translateY(-2px);
+            }
+        }
+    }
+
+    // Sobrescritura elegante y limpia de las clases inyectadas de Splide
+    &__arrows {
+        .hero__arrow {
+            width: 50px;
+            height: 50px;
+            background: rgba($color-white, 0.08);
+            border: 1px solid rgba($color-white, 0.15);
+            backdrop-filter: blur(4px);
+            transition: $transition-smooth;
+
+            svg {
+                fill: $color-white;
+                width: 18px;
+                height: 18px;
+            }
+
+            &:hover {
+                background: $color-construction-orange;
+                border-color: $color-construction-orange;
+                opacity: 1;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    &__pagination {
+        bottom: 30px !important;
+
+        .hero__page-dot {
+            width: 10px;
+            height: 10px;
+            background: rgba($color-white, 0.35);
+            margin: 0 6px;
+            transition: $transition-smooth;
+            border-radius: 50%;
+            border: none;
+
+            &.is-active {
+                background: $color-construction-orange;
+                transform: scale(1.3);
+            }
+        }
+    }
+}
+
+// Desencadenar animación cuando la lámina de Splide se activa
+.splide__slide.is-active {
+    .hero__content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Ajustes de adaptabilidad responsiva
+@media (max-width: $breakpoint-tablet) {
+    .hero {
+        &__title {
+            font-size: 34px;
+        }
+
+        &__subtitle {
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        &__content {
+            padding-top: 60px;
+        }
+
+        &__actions {
+            width: 100%;
+            flex-direction: column;
+            gap: 12px;
+
+            .hero__btn {
+                width: 100%;
+                padding: 14px;
+            }
+        }
+
+        &__arrows {
+            display: none; // Ocultar flechas en móviles para mejorar la experiencia táctil
+        }
+    }
+}
+
+.about-us {
+    padding: 100px 0;
+    background-color: $color-light-gray; // Variable de tu _vars.scss (ej: #f8fafc)
+    display: flex;
+    justify-content: center;
+
+    &__container {
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+        box-sizing: border-box;
+    }
+
+    // Columna de historia y narrativa
+    &__narrative {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__badge {
+        color: $color-construction-orange; // De tus variables globales
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        font-family: $font-header;
+    }
+
+    &__title {
+        font-family: $font-header;
+        color: $color-concrete-dark; // De tus variables globales
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 0 0 24px 0;
+        letter-spacing: -0.5px;
+    }
+
+    &__paragraph {
+        font-size: 16px;
+        color: $color-steel-gray; // De tus variables globales
+        line-height: 1.6;
+        margin: 0 0 16px 0;
+
+        &--highlight {
+            font-size: 18px;
+            color: color.adjust($color: $color-concrete-dark, $lightness: 10%);
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+    }
+
+    &__stats {
+        display: flex;
+        gap: 40px;
+        margin-top: 32px;
+        border-top: 1px solid rgba($color-steel-gray, 0.2);
+        padding-top: 32px;
+        width: 100%;
+    }
+
+    &__stat-card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__stat-number {
+        font-family: $font-header;
+        font-size: 44px;
+        font-weight: 800;
+        color: $color-construction-orange;
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+
+    &__stat-label {
+        font-size: 14px;
+        color: $color-steel-gray;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    // Columna de Pilares de construcción
+    &__pillars {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    &__pillar-card {
+        background-color: $color-white;
+        padding: 28px;
+        border-radius: 6px;
+        display: flex;
+        gap: 20px;
+        box-shadow: 0 4px 20px rgba($color-concrete-dark, 0.03);
+        border-left: 4px solid rgba($color-steel-gray, 0.2);
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: translateX(6px);
+            border-left-color: $color-construction-orange;
+            box-shadow: 0 10px 30px rgba($color-concrete-dark, 0.06);
+        }
+    }
+
+    &__pillar-icon-wrapper {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        background-color: rgba($color-construction-orange, 0.1);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    // Marcadores de posición CSS para iconos puros sin librerías externas
+    &__pillar-icon {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        border: 2px solid $color-construction-orange;
+        box-sizing: border-box;
+
+        &--building {
+            border-radius: 2px;
+        }
+
+        &--calendar {
+            height: 12px;
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: -4px;
+                left: 3px;
+                width: 2px;
+                height: 4px;
+                background: $color-construction-orange;
+            }
+        }
+
+        &--shield {
+            border-radius: 0 0 8px 8px;
+        }
+    }
+
+    &__pillar-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__pillar-title {
+        font-family: $font-header;
+        font-size: 18px;
+        font-weight: 700;
+        color: $color-concrete-dark;
+        margin: 0 0 8px 0;
+    }
+
+    &__pillar-desc {
+        font-size: 14px;
+        color: $color-steel-gray;
+        line-height: 1.5;
+        margin: 0;
+    }
+}
+
+// Responsividad para tablets y móviles
+@media (max-width: $breakpoint-tablet) {
+    .about-us {
+        padding: 60px 0;
+
+        &__container {
+            grid-template-columns: 1fr;
+            gap: 48px;
+        }
+
+        &__title {
+            font-size: 30px;
+        }
+
+        &__paragraph {
+            &--highlight {
+                font-size: 16px;
+            }
+        }
+
+        &__stats {
+            gap: 24px;
+            justify-content: space-between;
+        }
+
+        &__stat-number {
+            font-size: 36px;
+        }
+    }
+}
+
+
+// SERVICIOS
+.services {
+    padding: 100px 0;
+    background-color: $color-white; // Heredado de tu _vars.scss
+    display: flex;
+    justify-content: center;
+
+    &__container {
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
+        box-sizing: border-box;
+    }
+
+    &__header {
+        max-width: 700px;
+        margin-bottom: 60px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__badge {
+        color: $color-construction-orange;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        font-family: $font-header;
+    }
+
+    &__title {
+        font-family: $font-header;
+        color: $color-concrete-dark;
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 0 0 16px 0;
+        letter-spacing: -0.5px;
+    }
+
+    &__subtitle {
+        font-size: 16px;
+        color: $color-steel-gray;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    // Grid responsivo sin media queries excesivas usando auto-fill
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 32px;
+        width: 100%;
+    }
+
+    &__card {
+        background-color: $color-light-gray; // Fondo sutil (ej: #f8fafc)
+        padding: 36px;
+        border-radius: 6px;
+        border: 1px solid rgba($color-steel-gray, 0.1);
+        display: flex;
+        flex-direction: column;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+        &:hover {
+            transform: translateY(-6px);
+            background-color: $color-white;
+            border-color: rgba($color-construction-orange, 0.3);
+            box-shadow: 0 12px 40px rgba($color-concrete-dark, 0.08);
+
+            .services__icon-box {
+                background-color: $color-construction-orange;
+
+                .services__icon {
+                    border-color: $color-white;
+
+                    &::before {
+                        background-color: $color-white;
+                    }
+                }
+            }
+        }
+    }
+
+    &__card-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    &__icon-box {
+        width: 44px;
+        height: 44px;
+        background-color: rgba($color-construction-orange, 0.1);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.3s ease;
+    }
+
+    // Glifos geométricos CSS puros alternativos
+    &__icon {
+        width: 14px;
+        height: 14px;
+        display: inline-block;
+        border: 2px solid $color-construction-orange;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+
+        &--crane {
+            border-radius: 50% 0 0 0;
+        }
+
+        &--trowel {
+            transform: rotate(45deg);
+        }
+
+        &--blueprint {
+            width: 16px;
+            height: 10px;
+        }
+
+        &--chart {
+            border-width: 0 2px 2px 0;
+        }
+    }
+
+    &__card-title {
+        font-family: $font-header;
+        font-size: 19px;
+        font-weight: 700;
+        color: $color-concrete-dark;
+        margin: 0;
+        line-height: 1.3;
+    }
+
+    &__card-desc {
+        font-size: 14px;
+        color: $color-steel-gray;
+        line-height: 1.6;
+        margin: 0 0 24px 0;
+        flex-grow: 1; // Fuerza a que las listas se alineen abajo aunque el texto varíe
+    }
+
+    &__feature-list {
+        list-style: none;
+        margin: 0;
+        padding: 16px 0 0 0;
+        border-top: 1px solid rgba($color-steel-gray, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &__feature-item {
+        font-size: 13.5px;
+        color: color.adjust($color: $color-concrete-dark, $lightness: 15%);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    &__check-dot {
+        width: 5px;
+        height: 5px;
+        background-color: $color-construction-orange;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+}
+
+// Adaptación para layouts móviles muy compactos
+@media (max-width: 480px) {
+    .services {
+        padding: 60px 0;
+
+        &__header {
+            margin-bottom: 40px;
+        }
+
+        &__title {
+            font-size: 28px;
+        }
+
+        &__card {
+            padding: 24px;
+        }
+    }
+}
+
+// →→→ PROYECTO ←←←
+
+.projects {
+    padding: 100px 0;
+    background-color: $color-light-gray; // Slate 50 de tus tokens
+    display: flex;
+    justify-content: center;
+    overflow: hidden; // Evita desbordamientos debido al peek móvil
+
+    &__container {
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 48px;
+        width: 100%;
+    }
+
+    &__badge {
+        color: $color-construction-orange;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        display: block;
+        font-family: $font-header;
+    }
+
+    &__title {
+        font-family: $font-header;
+        color: $color-pure-dark;
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
+
+    // Estructura de la Tarjeta (Card)
+    &__card {
+        background-color: $color-white;
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid rgba($color-steel-gray, 0.1);
+        box-shadow: 0 4px 20px rgba($color-pure-dark, 0.02);
+        transition: $transition-smooth;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 36px rgba($color-pure-dark, 0.08);
+
+            .projects__img {
+                transform: scale(1.05);
+            }
+
+            .projects__link-arrow {
+                transform: translateX(4px);
+            }
+        }
+    }
+
+    &__media {
+        position: relative;
+        width: 100%;
+        height: 240px;
+        overflow: hidden;
+        background-color: $color-concrete-dark;
+    }
+
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: $transition-smooth;
+    }
+
+    // Badges superpuestos en la imagen
+    &__tag-type {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background-color: rgba($color-pure-dark, 0.85);
+        color: $color-white;
+        padding: 6px 12px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 3px;
+        backdrop-filter: blur(4px);
+    }
+
+    &__tag-status {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background-color: #10b981; // Verde esmeralda (Entregado)
+        color: $color-white;
+        padding: 6px 12px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-radius: 3px;
+
+        &--executing {
+            background-color: $color-construction-orange; // Ámbar/Naranja de obra activa
+        }
+    }
+
+    // Información de la tarjeta
+    &__content {
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    &__card-title {
+        font-family: $font-header;
+        font-size: 20px;
+        font-weight: 700;
+        color: $color-concrete-dark;
+        margin: 0 0 12px 0;
+        line-height: 1.4;
+    }
+
+    &__location {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 24px;
+
+        &-icon {
+            width: 6px;
+            height: 6px;
+            border: 2px solid $color-steel-gray;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        &-text {
+            font-size: 14px;
+            color: $color-steel-gray;
+        }
+    }
+
+    &__link {
+        font-family: $font-header;
+        font-size: 14px;
+        font-weight: 700;
+        color: $color-construction-orange;
+        text-decoration: none;
+        margin-top: auto; // Empuja el link al fondo de la tarjeta de forma simétrica
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: $transition-structural;
+
+        &-arrow {
+            transition: $transition-structural;
+            display: inline-block;
+        }
+
+        &:hover {
+            color: $color-pure-dark;
+        }
+    }
+
+    // Flechas personalizadas de Splide ubicadas de forma limpia
+    &__arrows {
+        position: absolute;
+        top: -85px;
+        right: 24px;
+        display: flex;
+        gap: 12px;
+
+        .projects__arrow {
+            position: relative;
+            left: auto;
+            right: auto;
+            top: auto;
+            transform: none;
+            width: 44px;
+            height: 44px;
+            background-color: $color-white;
+            border: 1px solid rgba($color-steel-gray, 0.2);
+            border-radius: 4px;
+            transition: $transition-structural;
+
+            svg {
+                fill: $color-concrete-dark;
+                width: 16px;
+                height: 16px;
+            }
+
+            &:hover {
+                background-color: $color-construction-orange;
+                border-color: $color-construction-orange;
+
+                svg {
+                    fill: $color-white;
+                }
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+// Adaptación Responsiva
+@media (max-width: $breakpoint-tablet) {
+    .projects {
+        padding: 60px 0;
+
+        &__header {
+            margin-bottom: 32px;
+        }
+
+        &__title {
+            font-size: 28px;
+        }
+
+        &__arrows {
+            display: none; // En móviles confiamos en el gesto táctil (drag nativo de Splide)
+        }
+
+        &__media {
+            height: 200px;
+        }
+
+        &__content {
+            padding: 20px;
+        }
+    }
+}
+
+.contact {
+    padding: 100px 0;
+    background-color: $color-white;
+    display: flex;
+    justify-content: center;
+
+    &__container {
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 80px;
+        align-items: flex-start;
+        box-sizing: border-box;
+    }
+
+    // Columna Informativa
+    &__info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__badge {
+        color: $color-construction-orange;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 16px;
+        font-family: $font-header;
+    }
+
+    &__title {
+        font-family: $font-header;
+        color: $color-pure-dark;
+        font-size: 38px;
+        font-weight: 800;
+        line-height: 1.2;
+        margin: 0 0 24px 0;
+        letter-spacing: -0.5px;
+    }
+
+    &__description {
+        font-size: 16px;
+        color: $color-steel-gray;
+        line-height: 1.6;
+        margin: 0 0 40px 0;
+    }
+
+    &__channels {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+    }
+
+    &__channel-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    &__channel-icon {
+        width: 44px;
+        height: 44px;
+        background-color: $color-light-gray;
+        border-radius: 4px;
+        border: 1px solid rgba($color-steel-gray, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        position: relative;
+
+        // Figuras geométricas puros simulando iconos de contacto
+        &::after {
+            content: '';
+            display: inline-block;
+            border: 2px solid $color-construction-orange;
+            box-sizing: border-box;
+        }
+
+        &--phone::after {
+            width: 10px;
+            height: 16px;
+            border-radius: 2px;
+        }
+
+        &--email::after {
+            width: 16px;
+            height: 11px;
+        }
+
+        &--office::after {
+            width: 12px;
+            height: 12px;
+            transform: rotate(45deg);
+        }
+    }
+
+    &__channel-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: $color-steel-gray;
+        text-transform: uppercase;
+        margin: 0 0 4px 0;
+        letter-spacing: 0.5px;
+    }
+
+    &__channel-value {
+        font-family: $font-header;
+        font-size: 16px;
+        font-weight: 700;
+        color: $color-concrete-dark;
+        margin: 0;
+    }
+
+    // Estructura del Formulario
+    &__form-wrapper {
+        background-color: $color-light-gray; // Slate 50 de tus tokens
+        padding: 48px;
+        border-radius: 6px;
+        border: 1px solid rgba($color-steel-gray, 0.1);
+        box-shadow: 0 4px 30px rgba($color-pure-dark, 0.02);
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    &__row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    &__label {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: $color-concrete-dark;
+    }
+
+    &__input {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 4px;
+        border: 1px solid rgba($color-steel-gray, 0.25);
+        background-color: $color-white;
+        color: $color-pure-dark;
+        font-size: 15px;
+        font-family: Arial, sans-serif;
+        box-sizing: border-box;
+        transition: $transition-structural;
+
+        &::placeholder {
+            color: color.adjust($color: $color-steel-gray, $lightness: 15%);
+        }
+
+        &:focus {
+            outline: none;
+            border-color: $color-construction-orange;
+            box-shadow: 0 0 0 3px rgba($color-construction-orange, 0.1);
+        }
+
+        &:disabled {
+            background-color: color.adjust($color: $color-light-gray, $lightness: -3%);
+            color: $color-steel-gray;
+            cursor: not-allowed;
+        }
+
+        &--select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        &--textarea {
+            resize: vertical;
+            font-family: Arial, sans-serif;
+        }
+    }
+
+    // Contenedor cosmético para la flecha de los selects nativos
+    &__select-wrapper {
+        position: relative;
+        width: 100%;
+
+        &::after {
+            content: '▼';
+            font-size: 10px;
+            color: $color-steel-gray;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+    }
+
+    // Botonera de Acción Primaria
+    &__btn {
+        width: 100%;
+        background-color: $color-construction-orange;
+        color: $color-white;
+        border: none;
+        padding: 16px;
+        border-radius: 4px;
+        font-family: $font-header;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba($color-construction-orange, 0.2);
+        transition: $transition-structural;
+
+        &:hover:not(:disabled) {
+            background-color: color.adjust($color: $color-construction-orange, $lightness: -6%);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba($color-construction-orange, 0.3);
+        }
+
+        &:disabled {
+            background-color: color.adjust($color: $color-steel-gray, $lightness: 15%);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        &--inline {
+            width: auto;
+            margin-top: 16px;
+            padding: 12px 24px;
+        }
+    }
+
+    // Alertas / Feedbacks de estados
+    &__alert {
+        padding: 24px;
+        border-radius: 4px;
+        line-height: 1.6;
+        font-size: 15px;
+
+        &--success {
+            background-color: rgba(#10b981, 0.1);
+            border: 1px solid rgba(#10b981, 0.3);
+            color: color.adjust($color: #10b981, $lightness: -15%);
+        }
+
+        &--error {
+            background-color: rgba(#ef4444, 0.1);
+            border: 1px solid rgba(#ef4444, 0.3);
+            color: color.adjust($color: #ef4444, $lightness: -15%);
+            margin-bottom: 16px;
+        }
+
+        -title {
+            font-family: $font-header;
+            font-weight: 700;
+            font-size: 18px;
+            margin: 0 0 8px 0;
+        }
+    }
+}
+
+// Adaptación Responsiva Completa
+@media (max-width: 960px) {
+    .contact {
+        &__container {
+            grid-template-columns: 1fr;
+            gap: 48px;
+        }
+
+        &__form-wrapper {
+            padding: 32px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-tablet) {
+    .contact {
+        padding: 60px 0;
+
+        &__title {
+            font-size: 30px;
+        }
+
+        &__row {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        &__form-wrapper {
+            padding: 24px;
+        }
+    }
+}
+
+.footer {
+    background-color: $color-pure-dark; // Slate 900 de tus tokens globales
+    padding: 80px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 4px solid $color-construction-orange;
+
+    &__container {
+        max-width: 1280px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 60px;
+        box-sizing: border-box;
+        padding-bottom: 60px;
+    }
+
+    // Bloque Identidad
+    &__brand {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+
+        &-square {
+            width: 14px;
+            height: 14px;
+            background-color: $color-construction-orange;
+            transform: rotate(45deg);
+        }
+
+        &-text {
+            font-family: $font-header;
+            font-weight: 800;
+            font-size: 22px;
+            color: $color-white;
+            letter-spacing: -0.5px;
+        }
+    }
+
+    &__brief {
+        font-size: 14.5px;
+        color: color.adjust($color: $color-steel-gray, $lightness: 15%);
+        line-height: 1.6;
+        margin: 0 0 24px 0;
+    }
+
+    // Iconos Sociales en CSS puro
+    &__socials {
+        display: flex;
+        gap: 12px;
+    }
+
+    &__social-link {
+        width: 36px;
+        height: 36px;
+        background-color: color.adjust($color: $color-pure-dark, $lightness: 6%);
+        border: 1px solid rgba($color-steel-gray, 0.2);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: $transition-structural;
+        position: relative;
+
+        &::after {
+            content: '';
+            display: inline-block;
+            border: 2px solid color.adjust($color: $color-steel-gray, $lightness: 15%);
+            box-sizing: border-box;
+        }
+
+        &--fb::after {
+            width: 6px;
+            height: 12px;
+            border-width: 2px 2px 0 0;
+        }
+
+        &--ig::after {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        &--ln::after {
+            width: 8px;
+            height: 8px;
+        }
+
+        &:hover {
+            background-color: $color-construction-orange;
+            border-color: $color-construction-orange;
+            transform: translateY(-2px);
+
+            &::after {
+                border-color: $color-white;
+            }
+        }
+    }
+
+    // Listas de Enlaces
+    &__links-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__title {
+        font-family: $font-header;
+        color: $color-white;
+        font-size: 16px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 0 0 24px 0;
+        position: relative;
+        padding-bottom: 8px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 24px;
+            height: 2px;
+            background-color: $color-construction-orange;
+        }
+    }
+
+    &__list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        &--static {
+            gap: 16px;
+        }
+    }
+
+    &__item {
+        font-size: 14.5px;
+
+        &--text {
+            color: color.adjust($color: $color-steel-gray, $lightness: 15%);
+            line-height: 1.5;
+
+            strong {
+                color: $color-white;
+            }
+        }
+    }
+
+    &__link {
+        color: color.adjust($color: $color-steel-gray, $lightness: 15%);
+        text-decoration: none;
+        transition: $transition-structural;
+
+        &:hover {
+            color: $color-construction-orange;
+            padding-left: 4px;
+        }
+    }
+
+    // Sección Inferior (Copyright)
+    &__bottom {
+        width: 100%;
+        background-color: color.adjust($color: $color-pure-dark, $lightness: -3%);
+        border-top: 1px solid rgba($color-steel-gray, 0.1);
+        padding: 24px 0;
+        display: flex;
+        justify-content: center;
+
+        &-container {
+            max-width: 1280px;
+            width: 100%;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+        }
+    }
+
+    &__copy {
+        font-size: 13.5px;
+        color: $color-steel-gray;
+        margin: 0;
+    }
+
+    &__legal {
+        display: flex;
+        gap: 24px;
+    }
+
+    &__legal-link {
+        font-size: 13.5px;
+        color: $color-steel-gray;
+        text-decoration: none;
+        transition: $transition-structural;
+
+        &:hover {
+            color: color.adjust($color: $color-steel-gray, $lightness: 20%);
+        }
+    }
+}
+
+// Control Responsivo
+@media (max-width: 840px) {
+    .footer {
+        &__container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+        }
+
+        &__title {
+            margin-bottom: 16px;
+        }
+
+        &__bottom-container {
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+        }
+
+        &__legal {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+    }
+}

@@ -1,0 +1,93 @@
+{
+    "navbar": {
+        "logoText": "Sara Construcciones",
+        "ctaText": "Cotizar Obra",
+        "menuItems": [
+            {
+                "label": "Inicio",
+                "anchor": "#inicio"
+            },
+            {
+                "label": "Nosotros",
+                "anchor": "#nosotros"
+            },
+            {
+                "label": "Servicios",
+                "anchor": "#servicios"
+            },
+            {
+                "label": "Proyectos",
+                "anchor": "#proyectos"
+            }
+        ]
+    },
+    "hero": [
+        {
+            "title": "Construimos Espacios de Vanguardia",
+            "subtitle": "Diseño arquitectónico y ejecución de obras civiles con los más altos estándares de solidez y acabados de lujo.",
+            "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1600&auto=format&fit=crop",
+            "ctaText": "Ver Proyectos",
+            "ctaLink": "#proyectos"
+        },
+        {
+            "title": "Ingeniería con Sello de Excelencia",
+            "subtitle": "Transformamos planos en realidades estructurales duraderas. Infraestructura residencial, comercial e industrial.",
+            "image": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1600&auto=format&fit=crop",
+            "ctaText": "Nuestros Servicios",
+            "ctaLink": "#servicios"
+        }
+    ],
+    "aboutUs": {
+        "sectionBadge": "Nuestra Trayectoria",
+        "title": "Construimos con Solidez, Diseñamos para el Futuro",
+        "mainText": "En Sara Construcciones fusionamos la ingeniería de precisión con el diseño arquitectónico de vanguardia...",
+        "secondaryText": "Nos especializamos tanto en proyectos residenciales de alta gama como en infraestructura comercial...",
+        "experienceYears": 15,
+        "completedProjects": 120,
+        "pillars": [
+            {
+                "title": "Calidad Certificada",
+                "description": "Garantizamos la máxima resistencia...",
+                "iconCode": "building"
+            },
+            {
+                "title": "Cumplimiento Estricto",
+                "description": "Respetamos el cronograma de obra...",
+                "iconCode": "calendar"
+            },
+            {
+                "title": "Seguridad Estructural",
+                "description": "Cada plano pasa por rigurosos análisis...",
+                "iconCode": "shield"
+            }
+        ]
+    },
+    "services": [
+        {
+            "id": "obras-civiles",
+            "title": "Obras Civiles e Infraestructura",
+            "description": "Construcción estructural de cimentaciones...",
+            "iconCode": "crane",
+            "features": [
+                "Estructuras de concreto",
+                "Movimiento de tierras"
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "id": "torre-sara-alta",
+            "title": "Torre Sara Alta Vista",
+            "type": "Residencial",
+            "location": "Norte de la Ciudad",
+            "status": "En ejecución",
+            "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800&auto=format&fit=crop"
+        }
+    ],
+    "footer": {
+        "description": "Ingeniería estructural y diseño arquitectónico de vanguardia...",
+        "phoneText": "+57 (300) 123-4567",
+        "emailText": "proyectos@saraconstrucciones.com",
+        "officeText": "Cra. 10 # 20 - 30, Oficina 501 - Bogotá, Colombia"
+    }
+}

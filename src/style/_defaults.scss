@@ -1,0 +1,30 @@
+:root {
+
+    font: {
+        size: 16px;
+        family: "Roboto", "Roboto Condensed", sans-serif, arial;
+    }
+}
+
+body {
+    height: 100vh;
+    overflow: auto;
+    margin: 0;
+}
+
+@supports (height: 100dvh) {
+    body {
+        height: 100dvh;
+    }
+}
+
+* {
+    scroll-behavior: smooth;
+
+    box-sizing: border-box;
+
+    &::before,
+    &::after {
+        box-sizing: inherit;
+    }
+}
