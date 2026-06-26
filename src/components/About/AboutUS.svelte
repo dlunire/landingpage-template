@@ -70,18 +70,18 @@
 
         <!-- Bloque de Pilares / Valores -->
         <div class="about-us__pillars">
-            {#each pillars as pillar}
+            {#each pillars as {iconCode, title, description}}
                 <div class="about-us__pillar-card">
                     <div class="about-us__pillar-icon-wrapper">
                         <!-- Icono decorativo CSS puro simulando el iconCode -->
                         <span
-                            class="about-us__pillar-icon about-us__pillar-icon--{pillar.iconCode}"
+                            class="about-us__pillar-icon about-us__pillar-icon--{iconCode}"
                         ></span>
                     </div>
                     <div class="about-us__pillar-info">
-                        <h3 class="about-us__pillar-title">{pillar.title}</h3>
+                        <h3 class="about-us__pillar-title">{title}</h3>
                         <p class="about-us__pillar-desc">
-                            {pillar.description}
+                            {description}
                         </p>
                     </div>
                 </div>
@@ -89,5 +89,3 @@
         </div>
     </div>
 </section>
-
-<style lang="scss" src="./AboutUs.scss"></style>
