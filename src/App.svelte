@@ -9,11 +9,11 @@
 </script>
 
 <main>
-    <header class="header">
+    <header class="header" id="home">
         <Navbar />
     </header>
 
-    <div class="container">
+    <div class="container" id="container">
         <Cover />
         <AboutUS />
         <Services />
@@ -21,5 +21,5 @@
         <ContactUS />
     </div>
 
-    <Footer />
+    <Footer id="footer" />
 </main>

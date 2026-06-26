@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
+  import IconLogo from "../../icons/IconLogo.svelte";
 
   // Contrato estructural para los enlaces de navegación
   interface IMenuItem {
@@ -8,13 +9,13 @@
   }
 
   // Props con datos de relleno temporal (luego alimentados por la API de DLUnire)
-  export let logoText: string = 'Sara Construcciones';
-  export let ctaText: string = 'Cotizar Obra';
+  export let logoText: string = "Sara Construcción";
+  export let ctaText: string = "Cotizar Obra";
   export let menuItems: IMenuItem[] = [
-    { label: 'Inicio', anchor: '#home' },
-    { label: 'Nosotros', anchor: '#about' },
-    { label: 'Servicios', anchor: '#services' },
-    { label: 'Proyectos', anchor: '#projects' }
+    { label: "Inicio", anchor: "#home" },
+    { label: "Nosotros", anchor: "#about" },
+    { label: "Servicios", anchor: "#services" },
+    { label: "Proyectos", anchor: "#projects" },
   ];
 
   // Estados del componente
@@ -37,38 +38,49 @@
   }
 
   onMount(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   });
 </script>
 
 <nav class="navbar" class:navbar--scrolled={isScrolled}>
   <div class="navbar__container">
-    
-    <a href="#inicio" class="navbar__logo" onclick={closeMenu}>
-      <span class="navbar__logo-square"></span>
-      <span class="navbar__logo-text">{logoText}</span>
+    <a
+      href="#home"
+      class="navbar__logo"
+      onclick={closeMenu}
+      aria-label="Sara Construcción"
+    >
+      <picture>
+        {#if isScrolled}
+          <source type="image/webp" srcset="images/logotipo.webp" />
+        {:else}
+          <source type="image/webp" srcset="images/logotipo-dark.webp" />
+        {/if}
+
+        <img src="images/logotipo-dark.webp" alt="Sara Construcción" />
+      </picture>
     </a>
 
     <ul class="navbar__menu" class:navbar__menu--open={isMobileMenuOpen}>
-      {#each menuItems as item}
+      {#each menuItems as { anchor, label }}
         <li class="navbar__item">
-          <a href={item.anchor} class="navbar__link" onclick={closeMenu}>
-            {item.label}
+          <a href={anchor} class="navbar__link" onclick={closeMenu}>
+            {label}
           </a>
         </li>
       {/each}
       <li class="navbar__item navbar__item--cta">
-        <a href="#contacto" class="navbar__btn" onclick={closeMenu}>
+        <a href="#contact" class="navbar__btn" onclick={closeMenu}>
           {ctaText}
         </a>
       </li>
     </ul>
 
-    <button 
-      class="navbar__hamburger" 
+    <button
+      class="navbar__hamburger"
       class:navbar__hamburger--active={isMobileMenuOpen}
       onclick={toggleMobileMenu}
       aria-label="Alternar menú de navegación"
@@ -77,8 +89,5 @@
       <span class="navbar__bar"></span>
       <span class="navbar__bar"></span>
     </button>
-
   </div>
 </nav>
-
-<style lang="scss" src="./Navbar.scss"></style>

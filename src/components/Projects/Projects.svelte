@@ -81,7 +81,7 @@
     });
 </script>
 
-<section id="proyectos" class="projects">
+<section id="projects" class="projects">
     <div class="projects__container">
         <div class="projects__header">
             <div class="projects__title-block">

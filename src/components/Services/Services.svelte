@@ -61,7 +61,7 @@
     ];
 </script>
 
-<section id="servicios" class="services">
+<section id="services" class="services">
     <div class="services__container">
         <!-- Encabezado de la Sección -->
         <div class="services__header">

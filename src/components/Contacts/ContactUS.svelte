@@ -51,7 +51,7 @@
   }
 </script>
 
-<section id="contacto" class="contact">
+<section id="contact" class="contact">
   <div class="contact__container">
     <div class="contact__info">
       <span class="contact__badge">{sectionBadge}</span>

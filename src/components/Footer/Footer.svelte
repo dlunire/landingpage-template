@@ -19,16 +19,27 @@
         { label: "Tratamiento de Datos", href: "#/datos" },
     ];
 
+    export let id: string = "footer";
+
     // Obtención dinámica del año (2026)
     const currentYear: number = new Date().getFullYear();
 </script>
 
-<footer class="footer">
+<footer class="footer" {id}>
     <div class="footer__container">
-        <div class="footer__brand">
+        <div class="footer__item footer__brand">
             <div class="footer__logo">
-                <span class="footer__logo-square"></span>
-                <span class="footer__logo-text">{companyName}</span>
+                <picture>
+                    <source
+                        type="image/webp"
+                        srcset="./images/logotipo-dark.webp"
+                    />
+
+                    <img
+                        src="./images/logotipo-dark.webp"
+                        alt="Sara Construcción"
+                    />
+                </picture>
             </div>
             <p class="footer__brief">{description}</p>
 
@@ -51,7 +62,7 @@
             </div>
         </div>
 
-        <div class="footer__links-group">
+        <div class="footer__item footer__links-group">
             <h3 class="footer__title">Navegación</h3>
             <ul class="footer__list">
                 {#each navigationLinks as link}
@@ -63,7 +74,7 @@
             </ul>
         </div>
 
-        <div class="footer__links-group">
+        <div class="footer__item footer__links-group">
             <h3 class="footer__title">Horarios y Atención</h3>
             <ul class="footer__list footer__list--static">
                 <li class="footer__item footer__item--text">
@@ -77,30 +88,34 @@
                 </li>
             </ul>
         </div>
+
+        <div class="footer__item">
+            <ul class="footer__legal">
+                {#each legalLinks as legal}
+                    <li class="footer__legal-item">
+                        <a href={legal.href} class="footer__legal-link"
+                            >{legal.label}</a
+                        >
+                    </li>
+                {/each}
+            </ul>
+        </div>
     </div>
 
     <div class="footer__bottom">
         <div class="footer__bottom-container">
-            <p class="footer__copy">
+            <div class="footer__copy">
                 &copy; {currentYear}
                 {companyName}. Todos los derechos reservados.
-            </p>
+            </div>
 
-            <p class="footer__powered">
+            <div class="footer__powered">
                 Powered by <a
                     href="https://dlunire.dev"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="footer__powered-link">DLUnire</a
                 >
-            </p>
-
-            <div class="footer__legal">
-                {#each legalLinks as legal}
-                    <a href={legal.href} class="footer__legal-link"
-                        >{legal.label}</a
-                    >
-                {/each}
             </div>
         </div>
     </div>

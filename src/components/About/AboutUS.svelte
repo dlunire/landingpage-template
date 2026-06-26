@@ -40,7 +40,7 @@
     ];
 </script>
 
-<section id="nosotros" class="about-us">
+<section id="about" class="about-us">
     <div class="about-us__container">
         <!-- Bloque de Texto e Impacto -->
         <div class="about-us__narrative">

@@ -1165,7 +1165,7 @@
 }
 
 .footer {
-    background-color: $color-pure-dark; // Slate 900 de tus tokens globales
+    background-color: color.adjust($color: $color-pure-dark, $lightness: -10%); // Slate 900 de tus tokens globales
     padding: 80px 0 0 0;
     display: flex;
     flex-direction: column;
@@ -1178,10 +1178,14 @@
         margin: 0 auto;
         padding: 0 24px;
         display: grid;
-        grid-template-columns: 1.5fr 1fr 1fr;
-        gap: 60px;
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
         box-sizing: border-box;
         padding-bottom: 60px;
+        gap: 5px;
+
+        @media screen and (max-width: 600px) {
+            grid-template-columns: 1fr;
+        }
     }
 
     // Bloque Identidad
@@ -1339,43 +1343,23 @@
         }
     }
 
-    // Sección Inferior (Copyright)
-    &__bottom {
-        width: 100%;
-        background-color: color.adjust($color: $color-pure-dark, $lightness: -3%);
-        border-top: 1px solid rgba($color-steel-gray, 0.1);
-        padding: 24px 0;
-        display: flex;
-        justify-content: center;
-
-        &-container {
-            max-width: 1280px;
-            width: 100%;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-sizing: border-box;
-        }
-    }
-
     // Sección Inferior (Copyright & Atribución)
     &__bottom {
         width: 100%;
-        background-color: darken($color-pure-dark, 3%);
         border-top: 1px solid rgba($color-steel-gray, 0.1);
-        padding: 24px 0;
+        background-color: rgba(white, 0.02);
+        padding: 15px 0;
         display: flex;
         justify-content: center;
 
         &-container {
-            max-width: 1280px;
-            width: 100%;
-            padding: 0 24px;
+            max-width: var(--max-width);
             display: flex;
-            justify-content: space-between; // Alineación perfecta de los 3 bloques
             align-items: center;
-            box-sizing: border-box;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            gap: 4px;
         }
     }
 
@@ -1388,25 +1372,31 @@
     // Estilos dedicados para la firma técnica
     &__powered {
         font-size: 13.5px;
-        color: lighten($color-steel-gray, 10%);
+        color: white;
         margin: 0;
 
         &-link {
-            color: $color-construction-orange;
             text-decoration: none;
             font-weight: 700;
             transition: $transition-structural;
 
             &:hover {
-                color: $color-white;
-                text-shadow: 0 0 8px rgba($color-construction-orange, 0.6);
+                color: white;
+            }
+
+            &:active {
+                transition: none;
+            }
+
+            &,
+            &:active {
+                color: rgba(white, 0.4);
             }
         }
     }
 
     &__legal {
-        display: flex;
-        gap: 24px;
+        border: 1px solid rgba(white, 0.1);
     }
 
     // Ajuste responsivo para móviles (apilar verticalmente)
@@ -1437,6 +1427,13 @@
 
         &:hover {
             color: color.adjust($color: $color-steel-gray, $lightness: 20%);
+        }
+    }
+
+    & {
+
+        img {
+            height: 100px;
         }
     }
 }
