@@ -27,7 +27,7 @@
 
 <footer class="footer" {id}>
     <div class="footer__container">
-        <div class="footer__item footer__brand">
+        <div class="footer__item footer__item--container footer__brand">
             <div class="footer__logo">
                 <picture>
                     <source
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="footer__item footer__links-group">
+        <div class="footer__item footer__item--container footer__links-group">
             <h3 class="footer__title">Navegación</h3>
             <ul class="footer__list">
                 {#each navigationLinks as link}
@@ -74,7 +74,7 @@
             </ul>
         </div>
 
-        <div class="footer__item footer__links-group">
+        <div class="footer__item footer__item--container footer__links-group">
             <h3 class="footer__title">Horarios y Atención</h3>
             <ul class="footer__list footer__list--static">
                 <li class="footer__item footer__item--text">
@@ -89,7 +89,9 @@
             </ul>
         </div>
 
-        <div class="footer__item">
+        <div class="footer__item footer__item--container">
+            <h3 class="footer__title">Legal</h3>
+
             <ul class="footer__legal">
                 {#each legalLinks as legal}
                     <li class="footer__legal-item">
