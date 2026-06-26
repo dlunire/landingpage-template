@@ -13,7 +13,7 @@
                 "Diseño arquitectónico y ejecución de obras civiles con los más altos estándares de solidez y acabados de lujo.",
             image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1600&auto=format&fit=crop",
             ctaText: "Ver Proyectos",
-            ctaLink: "#proyectos",
+            ctaLink: "#projects",
         },
         {
             title: "Ingeniería con Sello de Excelencia",
@@ -21,7 +21,7 @@
                 "Transformamos planos en realidades estructurales duraderas. Infraestructura residencial, comercial e industrial.",
             image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1600&auto=format&fit=crop",
             ctaText: "Nuestros Servicios",
-            ctaLink: "#servicios",
+            ctaLink: "#services",
         },
         {
             title: "Remodelaciones de Alto Impacto",
@@ -29,7 +29,7 @@
                 "Modernización y optimización de espacios existentes con planeación milimétrica y optimización presupuestaria.",
             image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop",
             ctaText: "Cotizar una Obra",
-            ctaLink: "#contacto",
+            ctaLink: "#contact",
         },
     ];
 
@@ -99,7 +99,7 @@
                                     {slide.ctaText}
                                 </a>
                                 <a
-                                    href="#contacto"
+                                    href="#contact"
                                     class="hero__btn hero__btn--secondary"
                                 >
                                     Asesoría Gratuita

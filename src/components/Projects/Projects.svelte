@@ -126,7 +126,7 @@
                                             >{project.location}</span
                                         >
                                     </div>
-                                    <a href="#contacto" class="projects__link">
+                                    <a href="#contact" class="projects__link">
                                         Solicitar Información
                                         <span class="projects__link-arrow"
                                             >→</span

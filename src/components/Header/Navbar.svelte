@@ -9,7 +9,6 @@
   }
 
   // Props con datos de relleno temporal (luego alimentados por la API de DLUnire)
-  export let logoText: string = "Sara Construcción";
   export let ctaText: string = "Cotizar Obra";
   export let menuItems: IMenuItem[] = [
     { label: "Inicio", anchor: "#home" },
