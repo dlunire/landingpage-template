@@ -38,3 +38,9 @@ export interface IFooterLink {
     rel?: string;
     target?: string;
 }
+
+export interface IPillar {
+    title: string;
+    description: string;
+    iconCode: string; // Representación lógica para iconos
+}

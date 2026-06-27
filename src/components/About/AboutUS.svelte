@@ -1,10 +1,6 @@
 <script lang="ts">
-    // Contrato para los pilares corporativos
-    interface IPillar {
-        title: string;
-        description: string;
-        iconCode: string; // Representación lógica para iconos
-    }
+    import type { IPillar } from "../../lib/Type";
+
 
     // Props con contenido temporal de relleno para la constructora
     export let sectionBadge: string = "Nuestra Trayectoria";
@@ -70,7 +66,7 @@
 
         <!-- Bloque de Pilares / Valores -->
         <div class="about-us__pillars">
-            {#each pillars as {iconCode, title, description}}
+            {#each pillars as { iconCode, title, description }}
                 <div class="about-us__pillar-card">
                     <div class="about-us__pillar-icon-wrapper">
                         <!-- Icono decorativo CSS puro simulando el iconCode -->
