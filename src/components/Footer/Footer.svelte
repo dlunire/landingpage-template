@@ -1,4 +1,7 @@
 <script lang="ts">
+    import IconFacebookF from "../../icons/IconFacebookF.svelte";
+    import IconInstagramSolid from "../../icons/IconInstagramSolid.svelte";
+    import IconLinkedInSolid from "../../icons/IconLinkedInSolid.svelte";
     import type { IFooterLink } from "../../lib/Type";
 
     // Props con datos temporales institucionales
@@ -47,18 +50,18 @@
                 <a
                     href="#facebook"
                     class="footer__social-link footer__social-link--fb"
-                    aria-label="Facebook"
-                ></a>
+                    aria-label="Facebook"><IconFacebookF /></a
+                >
                 <a
                     href="#instagram"
                     class="footer__social-link footer__social-link--ig"
-                    aria-label="Instagram"
-                ></a>
+                    aria-label="Instagram"><IconInstagramSolid /></a
+                >
                 <a
                     href="#linkedin"
-                    class="footer__social-link footer__social-link--ln"
-                    aria-label="LinkedIn"
-                ></a>
+                    class="footer__social-link footer__social-link--in"
+                    aria-label="LinkedIn"><IconLinkedInSolid /></a
+                >
             </div>
         </div>
 

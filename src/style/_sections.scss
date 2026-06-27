@@ -1242,28 +1242,22 @@
         transition: $transition-structural;
         position: relative;
 
-        &::after {
-            content: '';
-            display: inline-block;
-            border: 2px solid color.adjust($color: $color-steel-gray, $lightness: 15%);
-            box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        --icon-size: 20px;
+
+        --icon-width: var(--icon-size);
+        --icon-height: var(--icon-size);
+        --icon-color: white;
+
+        &--fb {
+            --icon-size: 15px;
         }
 
-        &--fb::after {
-            width: 6px;
-            height: 12px;
-            border-width: 2px 2px 0 0;
-        }
-
-        &--ig::after {
-            width: 10px;
-            height: 10px;
-            border-radius: 2px;
-        }
-
-        &--ln::after {
-            width: 8px;
-            height: 8px;
+        &--in {
+            --icon-size: 15px;
         }
 
         &:hover {
