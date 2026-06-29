@@ -44,3 +44,10 @@ export interface IPillar {
     description: string;
     iconCode: string; // Representación lógica para iconos
 }
+
+export interface Token {
+    lexeme: string;
+    offset: number;
+    length?: number;
+    error?: boolean;
+}

@@ -2,6 +2,7 @@
     import IconFacebookF from "../../icons/IconFacebookF.svelte";
     import IconInstagramSolid from "../../icons/IconInstagramSolid.svelte";
     import IconLinkedInSolid from "../../icons/IconLinkedInSolid.svelte";
+    import { getBaseURL, getRoute } from "../../lib/router";
     import type { IFooterLink } from "../../lib/Type";
 
     // Props con datos temporales institucionales
@@ -26,6 +27,9 @@
 
     // Obtención dinámica del año (2026)
     const currentYear: number = new Date().getFullYear();
+
+    getBaseURL();
+    getRoute();
 </script>
 
 <footer class="footer" {id}>
