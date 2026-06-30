@@ -1,4 +1,4 @@
-import { TokenType, type Token } from "./type";
+import { TokenType, type RouteType, type Token } from "./type";
 
 /** Tokens  capturados durante el análisis léxico */
 const tokens: Token[] = [];
@@ -480,4 +480,65 @@ function getTokenType(lexeme: string, offset: number): TokenType {
     }
 
     return tokenType;
+}
+
+/**
+ * Analiza una ruta y devuelve su representación canónica junto con su
+ * clasificación léxica.
+ *
+ * La ruta es procesada por el analizador léxico de DLRoute para obtener
+ * su forma canónica y determinar si contiene segmentos parametrizados.
+ * La clasificación se realiza recorriendo los tokens producidos por el
+ * autómata: si al menos uno de ellos corresponde a un parámetro
+ * ({@link TokenType.Parameter}), la ruta completa se considera
+ * parametrizada; en caso contrario, se clasifica como una ruta estática
+ * ({@link TokenType.Static}).
+ *
+ * @param uri - Ruta a analizar.
+ *
+ * @returns Un objeto con la siguiente información:
+ * - `uri`: representación canónica de la ruta.
+ * - `type`: clasificación léxica de la ruta
+ *   ({@link TokenType.Static} o {@link TokenType.Parameter}).
+ *
+ * @remarks
+ * La clasificación se realiza sobre el conjunto completo de tokens y no
+ * sobre un segmento específico. Basta con que exista un único token de
+ * tipo {@link TokenType.Parameter} para que toda la ruta sea considerada
+ * parametrizada.
+ *
+ * Esta función constituye un punto de entrada de alto nivel para el
+ * sistema de enrutamiento, ya que combina en una sola operación la
+ * normalización de la ruta y la determinación de su naturaleza léxica.
+ *
+ * @example
+ * parseRoute('/users/profile');
+ * // {
+ * //     uri: '/users/profile',
+ * //     type: TokenType.Static
+ * // }
+ *
+ * @example
+ * parseRoute('/users/:id/profile');
+ * // {
+ * //     uri: '/users/:id/profile',
+ * //     type: TokenType.Parameter
+ * // }
+ */
+export function parseRoute(uri: string): RouteType {
+    scanner(uri);
+
+    let tokenType: TokenType = TokenType.Static;
+
+    for (const token of tokens) {
+        if (token.type === TokenType.Parameter) {
+            tokenType = token.type;
+            break;
+        }
+    }
+
+    return {
+        uri: getCanonicalURI(),
+        type: tokenType
+    };
 }

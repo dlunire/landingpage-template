@@ -81,3 +81,8 @@ export interface Token {
      */
     length?: number;
 }
+
+export interface RouteType {
+    uri: string;
+    type: TokenType;
+}
