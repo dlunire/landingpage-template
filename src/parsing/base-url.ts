@@ -31,8 +31,10 @@ export function getRoute(): string {
 }
 
 function determineRoute() {
+    const dlunire: string = 'https://dlunire.dev';
+
     /** URI actual de la petición */
-    const currentURI: string = parsing.getURIFromURL(globalThis.location?.href ?? 'https://dlunire.dev');
+    const currentURI: string = parsing.getURIFromURL(globalThis.location?.href ?? dlunire);
 
     /** URI Canónico */
     const uri: string = getCanonicalURI();
