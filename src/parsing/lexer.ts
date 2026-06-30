@@ -476,8 +476,8 @@ function getTokenType(lexeme: string, offset: number): TokenType {
     const { length: size } = lexeme;
 
     if (tokenType === TokenType.Parameter && size <= 1) {
-        throw new Error(`Se requiere, mínimo un carácter para el parámetro. Solo se obtuvo ':'`);
+        throw new Error(`Se requiere mínimo un carácter para el parámetro. Solo se obtuvo ':'`);
     }
-    
+
     return tokenType;
 }
