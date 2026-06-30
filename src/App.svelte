@@ -7,13 +7,17 @@
     import ContactUS from "./components/Contacts/ContactUS.svelte";
     import Footer from "./components/Footer/Footer.svelte";
     import * as parsing from "./parsing/lexer";
-
+    import * as routing from "./parsing/base-url";
+    
+    
     $: {
         console.clear();
         console.log({
             tokens: parsing.getTokensFromURI("/ciencias/de/la/computación"),
-            uri: parsing.getTokensFromURI("/ciencia////////de//://///////:datos?ciencia=vlor"),
+            uri: parsing.getTokensFromURI(":d?ciencia=vlor"),
         });
+        routing.getBaseURL();
+        routing.getRoute();
     }
 </script>
 
