@@ -16,6 +16,7 @@
             tokens: parsing.getTokensFromURI("/ciencias/de/la/computación"),
             uri: parsing.getTokensFromURI(":d?ciencia=vlor"),
         });
+        
         routing.getBaseURL();
         routing.getRoute();
     }
