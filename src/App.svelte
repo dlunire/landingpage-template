@@ -6,19 +6,25 @@
     import Projects from "./components/Projects/Projects.svelte";
     import ContactUS from "./components/Contacts/ContactUS.svelte";
     import Footer from "./components/Footer/Footer.svelte";
+
     import * as parsing from "./parsing/lexer";
     import * as routing from "./parsing/base-url";
-    
-    
+    import * as router from "./lib/router";
+
     $: {
         console.clear();
         console.log({
             tokens: parsing.getTokensFromURI("/ciencias/de/la/computación"),
             uri: parsing.getTokensFromURI(":d?ciencia=vlor"),
         });
-        
+
         routing.getBaseURL();
         routing.getRoute();
+
+        router.route("/ciencia/:de/datos");
+        router.route("/ciencias//de/la / computación");
+
+        console.log({ routes: router.getRoutes() });
     }
 </script>
 

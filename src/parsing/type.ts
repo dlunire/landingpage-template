@@ -85,4 +85,5 @@ export interface Token {
 export interface RouteType {
     uri: string;
     type: TokenType;
+    tokens: Token[]
 }

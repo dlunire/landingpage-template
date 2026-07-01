@@ -33,6 +33,8 @@ const COLON: string = ":";
  * Reinicia el estado del autómata a sus valores iniciales.
  *
  * @remarks
+ * **Modelo mental PHP vs TypeScript:**
+ *
  * En PHP, una propiedad declarada como `private int $offset = 0;` se
  * reinicia **implícitamente** cada vez que se crea una nueva instancia
  * de la clase: el constructor (explícito o no) asigna ese valor inicial
@@ -41,19 +43,47 @@ const COLON: string = ":";
  * modelo de objetos: una instancia nueva siempre nace con estado nuevo.
  *
  * En este módulo de TypeScript no existe ese reinicio implícito, porque
- * `offset` y `tokens` no son propiedades de instancia, sino variables
- * de módulo (cerradas sobre el closure del archivo). El módulo se
- * importa una sola vez y persiste mientras viva el proceso de Node, por
- * lo que su estado sobrevive entre llamadas exactamente igual que
+ * `offset`, `tokens` e `input` no son propiedades de instancia, sino
+ * variables de módulo cerradas sobre el closure del archivo. El módulo
+ * se importa una sola vez y persiste mientras viva el proceso de Node,
+ * por lo que su estado sobrevive entre llamadas exactamente igual que
  * sobreviviría una propiedad `static` en PHP, no una propiedad de
  * instancia. No hay un "constructor" que se ejecute en cada análisis;
- * por tanto, el reinicio que el modelo mental de PHP daba por garantizado
- * aquí debe **hacerse explícito**, llamando a `resetState()` al inicio
- * de cada ciclo de tokenización (dentro de {@link scanner}).
+ * por tanto, el reinicio que el modelo mental de PHP daba por
+ * garantizado aquí debe **hacerse explícito**, llamando a
+ * `resetState()` al inicio de cada ciclo de tokenización.
+ *
+ * **Referencias vs. valores — por qué `tokens.length = 0` y no `tokens = []`:**
+ *
+ * `tokens` está declarado como `const`, por lo que reasignarlo
+ * (`tokens = []`) no compila. Pero incluso si estuviera declarado como
+ * `let`, reasignarlo crearía un array nuevo en memoria, dejando al
+ * descubierto el array anterior al que cualquier {@link RouteType} ya
+ * retornado seguiría apuntando, con sus tokens intactos pero
+ * desconectado del autómata.
+ *
+ * `tokens.length = 0` vacía el contenido del array **sin romper la
+ * referencia**: todos los que apunten a `tokens` verán el array vacío,
+ * y el autómata seguirá trabajando sobre el mismo objeto en memoria.
+ * Por eso es la forma correcta de limpiar el estado interno.
+ *
+ * La contraparte de esto en las funciones que retornan tokens al
+ * exterior es siempre devolver un snapshot (`[...tokens]`), no la
+ * referencia directa. Sin ese spread, cualquier objeto que reciba
+ * `tokens` quedaría expuesto a mutaciones futuras del autómata:
+ * `resetState` lo vaciaría, y `scanner` lo llenaría con los tokens de
+ * la siguiente URI, contaminando silenciosamente el resultado ya
+ * entregado. Ese fue exactamente el bug que se manifestó en
+ * {@link parseRoute} antes de aplicar `[...tokens]`.
+ *
+ * En resumen:
+ * - `tokens.length = 0` controla la referencia **interna**.
+ * - `[...tokens]` protege la referencia **externa**.
+ * - Ambas son necesarias; ninguna reemplaza a la otra.
  *
  * @example
  * // PHP (implícito, vía instanciación):
- * // $lexer = new Lexer(); // offset = 0 y tokens = [] por nacimiento
+ * // $lexer = new Lexer(); // offset = 0, tokens = [] y input = '' por nacimiento
  *
  * // TypeScript (explícito, vía función de reseteo):
  * function scanner(uri: string = ''): void {
@@ -64,6 +94,7 @@ const COLON: string = ":";
 function resetState(): void {
     offset = 0;
     tokens.length = 0;
+    input = '';
 }
 
 /**
@@ -198,7 +229,7 @@ function nextDelimiter(): void {
     const lexeme: string = input.substring(currentOffset, end ?? offset);
 
     tokens.push({
-        type: getTokenType(lexeme, currentOffset - 1),
+        type: getTokenType(lexeme),
         lexeme,
         offset: currentOffset - 1,
         length: offset - currentOffset + (end ? 1 : 0),
@@ -417,9 +448,9 @@ function processURL(url: string): void {
  * Determina la clasificación léxica de un segmento de ruta.
  *
  * La clasificación se realiza exclusivamente a partir de la gramática
- * del lenguaje de rutas. Actualmente, un segmento cuyo primer carácter
- * es `:` se interpreta como un parámetro; cualquier otro segmento se
- * considera un literal de la ruta.
+ * del lenguaje de rutas. Un segmento cuyo primer carácter es `:` se
+ * interpreta como un parámetro; cualquier otro segmento se considera
+ * un literal de la ruta.
  *
  * Esta clasificación se efectúa durante el análisis léxico para que
  * las etapas posteriores del sistema de enrutamiento trabajen sobre
@@ -427,8 +458,6 @@ function processURL(url: string): void {
  * la resolución de rutas.
  *
  * @param lexeme - Lexema reconocido por el autómata.
- * @param offset - Posición inicial del lexema dentro de la entrada
- *                  analizada (índice basado en cero).
  *
  * @returns El tipo léxico correspondiente al segmento:
  * - {@link TokenType.Parameter} si el lexema comienza con `:` y tiene
@@ -464,11 +493,11 @@ function processURL(url: string): void {
  * invariante se mantenga intacta para siempre.
  *
  * @example
- * getTokenType(':id', 6);   // → TokenType.Parameter
- * getTokenType('users', 1); // → TokenType.Static
- * getTokenType(':', 6);     // → throws Error
+ * getTokenType(':id');   // → TokenType.Parameter
+ * getTokenType('users'); // → TokenType.Static
+ * getTokenType(':');     // → throws Error
  */
-function getTokenType(lexeme: string, offset: number): TokenType {
+function getTokenType(lexeme: string): TokenType {
     const tokenType: TokenType = lexeme[0] === COLON
         ? TokenType.Parameter
         : TokenType.Static;
@@ -526,6 +555,7 @@ function getTokenType(lexeme: string, offset: number): TokenType {
  * // }
  */
 export function parseRoute(uri: string): RouteType {
+    resetState();
     scanner(uri);
 
     let tokenType: TokenType = TokenType.Static;
@@ -539,6 +569,8 @@ export function parseRoute(uri: string): RouteType {
 
     return {
         uri: getCanonicalURI(),
-        type: tokenType
+        type: tokenType,
+        tokens: [...tokens]
     };
 }
+
