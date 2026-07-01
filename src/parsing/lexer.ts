@@ -370,7 +370,7 @@ export function getURIFromURL(url: string): string {
  *
  * @example
  * getURIFromURI('/ciencias//de/la / computación');
- * // → "/ciencias/de/la/_computación"
+ * // → "/ciencias/de/la_/_computación"
  *
  * getURIFromURI('');
  * // → "/" (URI raíz, sin segmentos)
@@ -513,50 +513,71 @@ function getTokenType(lexeme: string): TokenType {
 
 /**
  * Analiza una ruta y devuelve su representación canónica junto con su
- * clasificación léxica.
+ * clasificación léxica y los tokens que la componen.
  *
- * La ruta es procesada por el analizador léxico de DLRoute para obtener
- * su forma canónica y determinar si contiene segmentos parametrizados.
- * La clasificación se realiza recorriendo los tokens producidos por el
- * autómata: si al menos uno de ellos corresponde a un parámetro
- * ({@link TokenType.Parameter}), la ruta completa se considera
- * parametrizada; en caso contrario, se clasifica como una ruta estática
- * ({@link TokenType.Static}).
+ * La ruta es procesada por {@link getURIFromURI}, que delega en el
+ * autómata para normalizarla y producir los tokens correspondientes.
+ * La clasificación se realiza recorriendo esos tokens: si al menos uno
+ * corresponde a un parámetro ({@link TokenType.Parameter}), la ruta
+ * completa se considera parametrizada; en caso contrario, se clasifica
+ * como estática ({@link TokenType.Static}).
  *
- * @param uri - Ruta a analizar.
+ * @param uri - Ruta a analizar. Puede contener separadores redundantes
+ *              (`//`), espacios o query string; todos serán normalizados
+ *              o descartados por el autómata antes de clasificar.
  *
- * @returns Un objeto con la siguiente información:
- * - `uri`: representación canónica de la ruta.
+ * @returns Un objeto {@link RouteType} con:
+ * - `uri`: representación canónica de la ruta, producida por
+ *   {@link getURIFromURI}.
  * - `type`: clasificación léxica de la ruta
  *   ({@link TokenType.Static} o {@link TokenType.Parameter}).
+ * - `tokens`: snapshot independiente de los tokens producidos durante
+ *   el análisis. Al ser una copia (`[...tokens]`) y no una referencia
+ *   al array interno del módulo, no se ve afectado por llamadas
+ *   posteriores al autómata.
+ *
+ * @throws {Error} Si algún segmento de la ruta es un parámetro sin
+ *         nombre (p. ej. `:`), propagado desde {@link getTokenType}.
  *
  * @remarks
- * La clasificación se realiza sobre el conjunto completo de tokens y no
+ * La clasificación se realiza sobre el conjunto completo de tokens, no
  * sobre un segmento específico. Basta con que exista un único token de
- * tipo {@link TokenType.Parameter} para que toda la ruta sea considerada
- * parametrizada.
+ * tipo {@link TokenType.Parameter} para que toda la ruta sea
+ * considerada parametrizada.
  *
- * Esta función constituye un punto de entrada de alto nivel para el
- * sistema de enrutamiento, ya que combina en una sola operación la
- * normalización de la ruta y la determinación de su naturaleza léxica.
+ * **Sobre el reinicio de estado:** `resetState()` al inicio de esta
+ * función es redundante en la práctica, ya que {@link getURIFromURI}
+ * delega en {@link scanner}, que llama a {@link resetState}
+ * internamente. Se conserva como salvaguarda explícita ante futuros
+ * cambios en la implementación de {@link getURIFromURI} que pudieran
+ * romper esa garantía implícita.
+ *
+ * **Sobre `[...tokens]`:** los tokens se retornan como snapshot y no
+ * como referencia directa al array interno del módulo. Sin este spread,
+ * una llamada posterior al autómata vaciaría o sobreescribiría los
+ * tokens del {@link RouteType} ya retornado, ya que ambos apuntarían
+ * al mismo objeto en memoria. Este fue el bug que motivó el uso de
+ * `[...tokens]` en esta función.
  *
  * @example
  * parseRoute('/users/profile');
  * // {
  * //     uri: '/users/profile',
- * //     type: TokenType.Static
+ * //     type: TokenType.Static,
+ * //     tokens: [{ type: 0, lexeme: 'users', ... }, { type: 0, lexeme: 'profile', ... }]
  * // }
  *
  * @example
  * parseRoute('/users/:id/profile');
  * // {
  * //     uri: '/users/:id/profile',
- * //     type: TokenType.Parameter
+ * //     type: TokenType.Parameter,
+ * //     tokens: [{ type: 0, lexeme: 'users', ... }, { type: 1, lexeme: ':id', ... }, ...]
  * // }
  */
 export function parseRoute(uri: string): RouteType {
     resetState();
-    scanner(uri);
+    uri = getURIFromURI(uri);
 
     let tokenType: TokenType = TokenType.Static;
 
@@ -568,7 +589,7 @@ export function parseRoute(uri: string): RouteType {
     }
 
     return {
-        uri: getCanonicalURI(),
+        uri,
         type: tokenType,
         tokens: [...tokens]
     };
