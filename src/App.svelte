@@ -32,9 +32,9 @@
         router.route("/contenido/:id", IconCalendar);
         router.route("/clients/:id/orders/:order", IconCalendar);
         console.log({ route: routing.getRoute(), routes: router.getRoutes() });
-        const test = router.dispatch();
+        const component = router.dispatch().component as Function;
 
-        console.log({ test })
+        console.log({ component })
     }
 </script>
 
