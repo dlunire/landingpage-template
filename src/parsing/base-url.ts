@@ -1,4 +1,5 @@
 import * as parsing from "./lexer";
+import type { CurrentRouteType, Token } from "./type";
 
 /**
  * Obtiene la URI canónica configurada como base del enrutador.
@@ -97,7 +98,7 @@ export function getBaseURL(): string {
  * {@link determineRoute}, manteniendo encapsulado el algoritmo de
  * determinación de la ruta y ofreciendo una API estable al consumidor.
  */
-export function getRoute(): string {
+export function getRoute(): CurrentRouteType {
     return determineRoute();
 }
 
@@ -135,11 +136,15 @@ export function getRoute(): string {
  * `/`, incluso cuando la primera diferencia entre ambas URIs ocurre en
  * una posición distinta del separador de segmentos.
  */
-function determineRoute(): string {
+function determineRoute(): CurrentRouteType {
+    /** URL base del ecosistema DLUnire */
     const dlunire: string = 'https://dlunire.dev';
 
-    /** URI actual de la petición */
+    /** Tokens capturados */
     const currentURI: string = parsing.getURIFromURL(globalThis.location?.href ?? dlunire);
+
+    /** URI formada a partir los tokens capturados durante el análisis léxico */
+    // const currentURI: string = `/${tokens.map((token) => token.lexeme).join("/")}`;
 
     /** URI Canónico */
     const uri: string = getCanonicalURI();
@@ -157,10 +162,20 @@ function determineRoute(): string {
         offset++;
     }
 
+    /** Ruta determinada durante el análisis  */
     const route: string = currentURI.substring(offset);
 
-    return route[0] === "/"
+    /** Ruta procesada */
+    const processedRoute = route[0] === "/"
         ? route
         : `/${currentURI.substring(offset - 1)}`;
+
+    /** Token capturado durante el análisis léxico de la ruta procesada */
+    const tokens: Token[] = parsing.getTokensFromURI(processedRoute);
+
+    return {
+        uri: processedRoute,
+        tokens: [...tokens]
+    };
 }
 

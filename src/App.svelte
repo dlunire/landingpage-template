@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import Cover from "./components/Hero/Cover.svelte";
     import Navbar from "./components/Header/Navbar.svelte";
     import AboutUS from "./components/About/AboutUS.svelte";
@@ -10,6 +10,8 @@
     import * as parsing from "./parsing/lexer";
     import * as routing from "./parsing/base-url";
     import * as router from "./lib/router";
+    import IconCalendar from "./icons/IconCalendar.svelte";
+    import IconCrane from "./icons/IconCrane.svelte";
 
     $: {
         console.clear();
@@ -21,10 +23,11 @@
         routing.getBaseURL();
         routing.getRoute();
 
-        router.route("/ciencia/:de/datos");
-        router.route("/ciencias//de/la / computación");
+        router.route("/ciencia/:de/datos", IconCalendar);
+        router.route("/ciencias//de/la / computación", IconCrane);
 
-        console.log({ routes: router.getRoutes() });
+        console.log({ route: routing.getRoute(), routes: router.getRoutes() });
+        router.dispatch();
     }
 </script>
 

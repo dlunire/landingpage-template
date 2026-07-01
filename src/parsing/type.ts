@@ -85,5 +85,11 @@ export interface Token {
 export interface RouteType {
     uri: string;
     type: TokenType;
-    tokens: Token[]
+    tokens: Token[],
+    component?: unknown
+}
+
+export interface CurrentRouteType {
+    uri: string;
+    tokens: Token[];
 }

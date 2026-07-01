@@ -1,5 +1,8 @@
 import * as parsing from "../parsing/lexer";
-import type { RouteType } from "../parsing/type";
+import * as routing from "../parsing/base-url";
+
+import type { CurrentRouteType, RouteType } from "../parsing/type";
+
 
 /**
  * Tabla interna de rutas registradas por el router.
@@ -17,8 +20,16 @@ import type { RouteType } from "../parsing/type";
  */
 const routes: { [x: string]: RouteType } = {};
 
-export function route(uri: string) {
+export function route(uri: string, component: unknown): void {
     const route: RouteType = parsing.parseRoute(uri);
+
+    /**
+     * Justo aquí se inyecta el componente, pero la propopiedad `component` tiene
+     * tipo como `unknown` para no ligarla necesariamente a Svelte, ya que la 
+     * idea es buscar compatibilidad con otras herramientas.
+     */
+    route.component = component;
+
     routes[`${route.type}-${route.uri}`] = route;
 }
 
@@ -30,4 +41,13 @@ export function resetState(): void {
 
 export function getRoutes(): { [x: string]: RouteType } {
     return routes;
+}
+
+export function dispatch(): void {
+    /** Ruta actual capturada */
+    const route: CurrentRouteType = routing.getRoute();
+
+    const { uri, tokens: currentTokens } = route;
+
+    console.log({ uri, currentTokens });
 }
