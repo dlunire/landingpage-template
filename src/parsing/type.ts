@@ -103,3 +103,8 @@ export interface ValidatedRoute {
     validated: boolean;
     uri: string|null;
 }
+
+export interface Dispatch {
+    validated: ValidatedRoute;
+    component: unknown;
+}

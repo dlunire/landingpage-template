@@ -1,7 +1,7 @@
 import * as parsing from "../parsing/lexer";
 import * as routing from "../parsing/base-url";
 
-import { TokenType, type CurrentRouteType, type Param, type RouteType, type Token, type ValidatedRoute } from "../parsing/type";
+import { TokenType, type CurrentRouteType, type Dispatch, type Param, type RouteType, type Token, type ValidatedRoute } from "../parsing/type";
 
 
 /**
@@ -43,30 +43,52 @@ export function getRoutes(): { [x: string]: RouteType } {
     return routes;
 }
 
-export function dispatch(): void {
+export function dispatch(): Dispatch {
     /** Ruta actual capturada */
     const route: CurrentRouteType = routing.getRoute();
 
     const { uri, tokens: currentTokens } = route;
 
+    /** Información adicional de rutas validadas */
+    let validatedRoute: ValidatedRoute | null = null;
+
     /** Ruta registrada que coincide con la URI canónica estática */
     const matchedRoute = routes[`0-${uri}`] ?? null;
 
-    let validatedRoute: ValidatedRoute;
+    if (matchedRoute) {
+        return {
+            validated: {
+                param: {},
+                uri: `0-${matchedRoute.uri}`,
+                validated: true
+            },
 
+            component: matchedRoute.component
+        };
+    }
 
     for (const route in routes) {
         if (route[0] === `${TokenType.Static}`) continue;
-        validateRoute(route.substring(2), currentTokens);
-
-
+        validatedRoute = getValidateRoute(route, currentTokens);
+        if (validatedRoute.validated) break;
     }
 
-    for (const token of currentTokens) {
-        console.log({ token, type: token.type });
+    if (validatedRoute && validatedRoute.uri) {
+        return {
+            validated: validatedRoute,
+            component: routes[validatedRoute.uri].component
+        }
     }
 
-    // console.log({ matchedRoute, uri, currentTokens, routes });
+    return {
+        validated:  {
+            param: {},
+            uri: null,
+            validated: false
+        },
+
+        component: null
+    }
 }
 
 /**
@@ -76,8 +98,8 @@ export function dispatch(): void {
  * @param uri Ruta a ser analizada para verificar coincidencia
  * @returns 
  */
-function validateRoute(uri: string, tokens: Token[]): ValidatedRoute {
-    const currentTokens: Token[] = parsing.getTokensFromURI(uri);
+function getValidateRoute(uri: string, tokens: Token[]): ValidatedRoute {
+    const currentTokens: Token[] = parsing.getTokensFromURI(uri.substring(2));
 
     const { length: currentLength } = currentTokens;
     const { length } = tokens;

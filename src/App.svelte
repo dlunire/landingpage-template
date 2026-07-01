@@ -30,8 +30,11 @@
         router.route("/ciencias//de/la / computación", IconCrane);
 
         router.route("/contenido/:id", IconCalendar);
+        router.route("/clients/:id/orders/:order", IconCalendar);
         console.log({ route: routing.getRoute(), routes: router.getRoutes() });
-        router.dispatch();
+        const test = router.dispatch();
+
+        console.log({ test })
     }
 </script>
 
