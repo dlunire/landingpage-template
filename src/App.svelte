@@ -6,36 +6,6 @@
     import Projects from "./components/Projects/Projects.svelte";
     import ContactUS from "./components/Contacts/ContactUS.svelte";
     import Footer from "./components/Footer/Footer.svelte";
-
-    import * as parsing from "./parsing/lexer";
-    import * as routing from "./parsing/base-url";
-    import * as router from "./lib/router";
-
-    import IconCalendar from "./icons/IconCalendar.svelte";
-    import IconCrane from "./icons/IconCrane.svelte";
-
-    $: {
-        router.resetState();
-
-        console.clear();
-        console.log({
-            tokens: parsing.getTokensFromURI("/ciencias/de/la/computación"),
-            uri: parsing.getTokensFromURI(":d?ciencia=vlor"),
-        });
-
-        routing.getBaseURL();
-        routing.getRoute();
-
-        router.route("/ciencia/:de/datos", IconCalendar);
-        router.route("/ciencias//de/la / computación", IconCrane);
-
-        router.route("/contenido/:id", IconCalendar);
-        router.route("/clients/:id/orders/:order", IconCalendar);
-        console.log({ route: routing.getRoute(), routes: router.getRoutes() });
-        const component = router.dispatch().component as Function;
-
-        console.log({ component })
-    }
 </script>
 
 <main>

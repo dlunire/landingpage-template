@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import IconLogo from "../../icons/IconLogo.svelte";
+  import { asset, getBaseURL } from "../../parsing/base-url";
 
   // Contrato estructural para los enlaces de navegación
   interface IMenuItem {
@@ -54,12 +55,15 @@
     >
       <picture>
         {#if isScrolled}
-          <source type="image/webp" srcset="images/logotipo.webp" />
+          <source type="image/webp" srcset={asset("images/logotipo.webp")} />
         {:else}
-          <source type="image/webp" srcset="images/logotipo-dark.webp" />
+          <source
+            type="image/webp"
+            srcset={asset("images/logotipo-dark.webp")}
+          />
         {/if}
 
-        <img src="images/logotipo-dark.webp" alt="Sara Construcción" />
+        <img src={asset("images/logotipo-dark.webp")} alt="Sara Construcción" />
       </picture>
     </a>
 

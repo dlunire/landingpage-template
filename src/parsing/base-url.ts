@@ -77,7 +77,13 @@ export function getBaseURL(): string {
         return defaultURL;
     }
 
-    return parsing.getURLFromURL(metaElement.content).href;
+    const href = parsing.getURLFromURL(metaElement.content).href;
+
+    const processedHref: string = href[href.length - 1] === "/"
+        ? href.substring(0, href.length - 1)
+        : href;
+        
+    return processedHref;
 }
 
 /**
@@ -179,3 +185,6 @@ function determineRoute(): CurrentRouteType {
     };
 }
 
+export function asset(uri: string): string {
+    return `${getBaseURL()}${parsing.getURIFromURI(uri)}`;
+}
