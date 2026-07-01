@@ -93,3 +93,13 @@ export interface CurrentRouteType {
     uri: string;
     tokens: Token[];
 }
+
+export interface Param {
+    [x: string]: string;
+}
+
+export interface ValidatedRoute {
+    param: Param;
+    validated: boolean;
+    uri: string|null;
+}

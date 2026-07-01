@@ -1,7 +1,7 @@
 import * as parsing from "../parsing/lexer";
 import * as routing from "../parsing/base-url";
 
-import type { CurrentRouteType, RouteType } from "../parsing/type";
+import { TokenType, type CurrentRouteType, type Param, type RouteType, type Token, type ValidatedRoute } from "../parsing/type";
 
 
 /**
@@ -49,5 +49,61 @@ export function dispatch(): void {
 
     const { uri, tokens: currentTokens } = route;
 
-    console.log({ uri, currentTokens });
+    /** Ruta registrada que coincide con la URI canónica estática */
+    const matchedRoute = routes[`0-${uri}`] ?? null;
+
+    let validatedRoute: ValidatedRoute;
+
+
+    for (const route in routes) {
+        if (route[0] === `${TokenType.Static}`) continue;
+        validateRoute(route.substring(2), currentTokens);
+
+
+    }
+
+    for (const token of currentTokens) {
+        console.log({ token, type: token.type });
+    }
+
+    // console.log({ matchedRoute, uri, currentTokens, routes });
+}
+
+/**
+ * Valida si la ruta registrada coincide con la ruta actual en el contexto de 
+ * la ruta con parámetros.
+ * 
+ * @param uri Ruta a ser analizada para verificar coincidencia
+ * @returns 
+ */
+function validateRoute(uri: string, tokens: Token[]): ValidatedRoute {
+    const currentTokens: Token[] = parsing.getTokensFromURI(uri);
+
+    const { length: currentLength } = currentTokens;
+    const { length } = tokens;
+
+    const param: Param = {};
+
+    if (length !== currentLength) return {
+        param,
+        uri: null,
+        validated: false
+    };
+
+    for (const index in tokens) {
+        const token: Token = tokens[index];
+        const currentToken: Token = currentTokens[index];
+
+        const currentLexeme: string = currentToken.lexeme.substring(1);
+        const lexeme: string = token.lexeme;
+
+        if (currentToken.type !== TokenType.Parameter) continue;
+        param[currentLexeme] = lexeme;
+    }
+
+    return {
+        param,
+        uri,
+        validated: true
+    };
 }
