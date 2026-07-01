@@ -1,7 +1,7 @@
-import * as parsing from "../parsing/lexer";
-import * as routing from "../parsing/base-url";
+import * as parsing from "./lexer";
+import * as routing from "./base-url";
 
-import { TokenType, type CurrentRouteType, type Dispatch, type Param, type RouteType, type Token, type ValidatedRoute } from "../parsing/type";
+import { TokenType, type CurrentRouteType, type Dispatch, type Param, type RouteType, type Token, type ValidatedRoute } from "./type";
 
 
 /**
